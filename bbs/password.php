@@ -1,0 +1,74 @@
+<?php
+include_once('./_common.php');
+
+// Page ID
+$pid = ($pid) ? $pid : 'password';
+$at = apms_page_thema($pid);
+if(!defined('THEMA_PATH')) {
+	include_once(G5_LIB_PATH.'/apms.thema.lib.php');
+}
+
+$g5['title'] = '비밀번호 입력';
+
+switch ($w) {
+    case 'u' :
+        $action = './write.php';
+        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+        break;
+    case 'd' :
+        $action = './delete.php';
+        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+        break;
+    case 'x' :
+        $action = './delete_comment.php';
+        $row = sql_fetch(" select wr_parent from $write_table where wr_id = '$comment_id' ");
+        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_parent'];
+        break;
+    case 's' :
+        // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
+        if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
+            goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+        else {
+            $action = './password_check.php';
+            $return_url = './board.php?bo_table='.$bo_table;
+        }
+        break;
+    case 'sc' :
+        // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
+        if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
+            goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+        else {
+            $action = './password_check.php';
+            $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+        }
+        break;
+    default :
+        alert('w 값이 제대로 넘어오지 않았습니다.');
+}
+
+include_once('./_head.php');
+
+$skin_path = $member_skin_path;
+$skin_url = $member_skin_url;
+
+/* 비밀글의 제목을 가져옴 지운아빠 2013-01-29 */
+$sql = " select wr_subject from {$write_table}
+                      where wr_num = '{$write['wr_num']}'
+                      and wr_reply = ''
+                      and wr_is_comment = 0 ";
+$row = sql_fetch($sql);
+
+$g5['title'] = get_text($row['wr_subject']);
+
+// 스킨설정
+$wset = (G5_IS_MOBILE) ? apms_skin_set('member_mobile') : apms_skin_set('member');
+
+$setup_href = '';
+if(is_file($skin_path.'/setup.skin.php') && ($is_demo || $is_admin == 'super')) {
+	$setup_href = './skin.setup.php?skin=member';
+}
+
+include_once($skin_path.'/password.skin.php');
+
+include_once('./_tail.php');
+?>
