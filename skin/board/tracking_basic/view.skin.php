@@ -42,42 +42,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <div class="view-wrap<?php echo (G5_IS_MOBILE) ? ' view-mobile font-14' : '';?>">
-	<h1><?php if($view['photo']) { ?><img src="<?php echo $view['photo'];?>" class="photo" alt=""><?php } ?><?php echo cut_str(get_text($view['wr_subject']), 70); ?></h1>
-	<div class="panel panel-default view-head<?php echo ($attach_list) ? '' : ' no-attach';?>">
-		<div class="panel-heading">
-			<div class="font-12 text-muted">
-				<i class="fa fa-user"></i>
-				<?php echo $view['name']; //등록자 ?><?php echo ($is_ip_view) ? '<span class="hidden-xs">&nbsp;('.$ip.')</span>' : ''; ?>
-				<?php if($view['ca_name']) { ?>
-					<span class="hidden-xs">
-						<span class="sp"></span>
-						<i class="fa fa-tag"></i>
-						<?php echo $view['ca_name']; //분류 ?>
-					</span>
-				<?php } ?>
-
-				<span class="sp"></span>
-				<i class="fa fa-comment"></i>
-				<?php echo ($view['wr_comment']) ? '<b class="red">'.number_format($view['wr_comment']).'</b>' : 0; //댓글수 ?>
-
-				<span class="sp"></span>
-				<i class="fa fa-eye"></i>
-				<?php echo number_format($view['wr_hit']); //조회수 ?>
-
-				<span class="hidden-xs pull-right">
-					<i class="fa fa-clock-o"></i>
-					<?php echo apms_datetime($view['date'], 'Y.m.d H:i'); //시간 ?>
-				</span>
-			</div>
-		</div>
-	   <?php
-			/*
-			if($attach_list) {
-				echo '<div class="list-group font-12">'.$attach_list.'</div>'.PHP_EOL;
-			}
-			*/
-		?>
-	</div>
 
 	<?php if ($is_torrent) { // 토렌트 파일정보 ?>
 		<?php for($i=0; $i < count($torrent); $i++) { ?>
@@ -115,39 +79,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 		<?php } ?>
 	<?php } ?>
 
-	<?php
-		// 이미지 상단 출력
-		$v_img_count = count($view['file']);
-		if($v_img_count && $is_img_head) {
-			echo '<div class="view-img">'.PHP_EOL;
-			for ($i=0; $i<=count($view['file']); $i++) {
-				if ($view['file'][$i]['view']) {
-					echo get_view_thumbnail($view['file'][$i]['view']);
-				}
-			}
-			echo '</div>'.PHP_EOL;
-		}
-	 ?>
-
-	 <!-- iframe --> 
+	<!-- iframe --> 
 	<div class="view-content">
 		<?php //echo get_view_thumbnail($view['content']); ?>
 		<iframe id="land_page" name="land_page" class="land-page iframe" src="<?php echo $view['link'][1]; ?>" style="width: 1196px; height: 1114px;"></iframe>
 	</div>
 
-	<?php
-		// 이미지 하단 출력
-		if($v_img_count && $is_img_tail) {
-			echo '<div class="view-img">'.PHP_EOL;
-			for ($i=0; $i<=count($view['file']); $i++) {
-				if ($view['file'][$i]['view']) {
-					echo get_view_thumbnail($view['file'][$i]['view']);
-				}
-			}
-			echo '</div>'.PHP_EOL;
-		}
-	?>
-
+	<!--
 	<?php if ($good_href || $nogood_href) { ?>
 		<div class="view-good-box">
 			<?php if ($good_href) { ?>
@@ -192,11 +130,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 						<button onclick="apms_shingo('<?php echo $bo_table;?>', '<?php echo $wr_id;?>', 'lock');" class="btn btn-black btn-xs"><i class="fa fa-lock"></i> <span class="hidden-xs">잠금</span></button>
 					<?php } ?>
 				<?php } ?>
-			</div>
-		</div>
-		<div class="pull-left">
-			<div class="form-group">
-				<?php include_once(G5_SNS_PATH."/view.tracking.sns.skin.php"); // SNS ?>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -307,6 +240,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 		</div>
 		<div class="clearfix"></div>
 	</div>
+	-->
 </div>
 <script>
 function board_move(href){
@@ -374,7 +308,7 @@ function fn_ResizeFrame() {
 
 	if( useIframe =="Y" )
 	{
-		iframeHeight = iframeHeight - 50;
+		iframeHeight = iframeHeight - 150;
 	}
   
 	var iframeWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;

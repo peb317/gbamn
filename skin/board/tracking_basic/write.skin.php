@@ -111,6 +111,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 		</div>
 	<?php } ?>
 
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="wr_subject">타입<strong class="sound_only">필수</strong></label>
+		<div class="col-sm-10">
+			<div class="input-group">
+				<select name="wr_1" id="wr_1" required class="form-control input-sm">
+                    <option value="">선택하세요</option>
+					<option value="1">클릭형(CPC)</option>
+					<option value="2">클릭체류형(CPC+5)</option>
+		        </select>
+			</div>
+		</div>
+	</div>	
+	
 	<?php if ($is_category) { ?>
 		<div class="form-group">
 			<label class="col-sm-2 control-label hidden-xs" for="ca_name">분류<strong class="sound_only">필수</strong></label>
@@ -119,14 +132,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
                     <option value="">선택하세요</option>
 	                <?php echo $category_option ?>
 		        </select>
-			</div>
-		</div>
-	<?php } ?>
-	<?php if ($option) { ?>
-		<div class="form-group">
-			<label class="col-sm-2 control-label hidden-xs">옵션</label>
-			<div class="col-sm-10">
-				<?php echo $option ?>
 			</div>
 		</div>
 	<?php } ?>
@@ -151,43 +156,31 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 			</div>
 		</div>
 	<?php } ?>
-
+	
 	<div class="form-group">
 		<label class="col-sm-2 control-label" for="wr_subject">제목<strong class="sound_only">필수</strong></label>
 		<div class="col-sm-10">
 			<div class="input-group">
 				<input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="form-control input-sm" size="50" maxlength="255">
-				<span class="input-group-btn">
-					<a href="<?php echo G5_BBS_URL;?>/helper.php" target="_blank" class="btn btn-black btn-sm hidden-xs win_scrap">안내</a>
-					<a href="<?php echo G5_BBS_URL;?>/helper.php?act=map" target="_blank" class="btn btn-black btn-sm hidden-xs win_scrap">지도</a>
-					<?php if ($is_member) { // 임시 저장된 글 기능 ?>
-						<button type="button" id="btn_autosave" data-toggle="modal" data-target="#autosaveModal" class="btn btn-black btn-sm">저장 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
-					<?php } ?>
-				</span>
 			</div>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="col-sm-12">
+			<label class="col-sm-2 control-label" for="wr_contents">내용<strong class="sound_only">필수</strong></label>
+			<div class="col-sm-10">
+			<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+			</div>
 			<?php if($write_min || $write_max) { ?>
 				<!-- 최소/최대 글자 수 사용 시 -->
 				<div class="well well-sm" style="margin-bottom:15px;">
 					현재 <strong><span id="char_count"></span></strong> 글자이며, 최소 <strong><?php echo $write_min; ?></strong> 글자 이상, 최대 <strong><?php echo $write_max; ?></strong> 글자 이하까지 쓰실 수 있습니다.
 				</div>
 			<?php } ?>
-			<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
 		</div>
 	</div>
 
-	<?php if($is_admin || ($boset['tag'] && $member['mb_level'] >= $boset['tag'])) { //태그 ?>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="as_tag">태그</label>
-			<div class="col-sm-10">
-				<input type="text" name="as_tag" id="as_tag" value="<?php echo $write['as_tag']; ?>" class="form-control input-sm" size="50">
-			</div>
-		</div>
-	<?php } ?>
 	<?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="wr_link<?php echo $i ?>">링크 #<?php echo $i ?></label>
@@ -274,25 +267,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css" medi
 		}
 		</script>
 
-		<div class="form-group">
-			<label class="col-sm-2 control-label">첨부사진</label>
-			<div class="col-sm-10">
-				<label class="control-label sp-label">
-					<input type="radio" name="as_img" value="0"<?php if(!$write['as_img']) echo ' checked';?>> 상단출력
-				</label>
-				<label class="control-label sp-label">
-					<input type="radio" name="as_img" value="1"<?php if($write['as_img'] == "1") echo ' checked';?>> 하단출력
-				</label>
-				<label class="control-label sp-label">
-					<input type="radio" name="as_img" value="2"<?php if($write['as_img'] == "2") echo ' checked';?>> 본문삽입
-				</label>
-				<div class="text-muted font-12" style="margin-top:4px;">
-					본문삽입시 {이미지:0}, {이미지:1} 과 같이 첨부번호를 입력하면 내용에 첨부사진 출력 가능
-				</div>
+	<?php } ?>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="wr_subject">단가<strong class="sound_only">필수</strong></label>
+		<div class="col-sm-10">
+			<div class="input-group">
+				차감포인트 <input type="text" name="wr_7" value="<?php echo $wr_7 ?>" id="wr_7" required class="form-control input-sm" size="10" maxlength="255">
+				</br>
+				보유포인트 <?php echo number_format($member['mb_point']);?>원
 			</div>
 		</div>
-	<?php } ?>
-
+	</div>
+	
 	<?php if ($is_guest) { //자동등록방지  ?>
 		<div class="well well-sm text-center">
 			<?php echo $captcha_html; ?>

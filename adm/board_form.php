@@ -1576,6 +1576,26 @@ $frm_submit .= '</div>';
                 <label for="chk_all_<?php echo $i ?>">전체적용</label>
             </td>
         </tr>
+        <tr>
+            <th scope="row"></th>
+            <td class="td_extra">
+				<?php 
+				switch($i){
+					case '1'	: echo "과금타입 0 : CPC / 1 : CPV / 2 : CPA / 3 : CPS ....."; break;
+					case '2'	: echo "SNS공유 타입 0 : FB / 1 : TW / 2 : G+ / 3 : KS / 4 : BD"; break;
+					case '3'	: echo "공유트레픽 0~2 DEPTH"; break;
+					case '4'	: echo "유효클릭 횟수"; break;
+					case '5'	: echo "시작시간"; break;
+					case '6'	: echo "종료시간"; break;
+					case '7'	: echo "클릭당 포인트 차감금액"; break;
+					case '8'	: echo "하루 포인트 차감상한선"; break;
+					default		: echo "미설정"; break;
+				}
+				?>
+            </td>
+            <td class="td_grpset">
+            </td>
+        </tr>
         <?php } ?>
         </tbody>
         </table>

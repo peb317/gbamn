@@ -1,6 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+//include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // 선택옵션으로 인해 셀합치기가 가변적으로 변함
 $colspan = 5;
@@ -10,10 +10,10 @@ if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 0);
 ?>
 
-<!-- 게시판 목록 시작 { -->
+<!-- <?php echo $bo_subject; ?> 최신글 시작 { -->
 <div id="bo_list" style="width:<?php echo $width; ?>">
 
     <!-- 게시판 카테고리 시작 { -->
@@ -225,4 +225,4 @@ function select_copy(sw) {
 }
 </script>
 <?php } ?>
-<!-- } 게시판 목록 끝 -->
+<!-- } <?php echo $bo_subject; ?> 최신글 끝 -->
